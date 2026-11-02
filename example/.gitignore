@@ -1,0 +1,8 @@
+# If you version your own brain with git, keep the repository PRIVATE.
+# Never commit quarantined material.
+_sensitive-hold/*
+!_sensitive-hold/README.md
+.DS_Store
+__pycache__/
+*.tmp
+*.lock
