@@ -83,6 +83,7 @@ This produced "memory v2", the largest single change (see the timeline).
 | Month 4 | **Inline and spill** (`log-recent.py`): the newest log entries in full, a count and date range for the rest | Long logs stay searchable without loading them |
 | Month 4 | **Related lines** (chain of recall): two to five links under each summary, added by the dream five files a week | Agents follow links instead of grepping the whole tree |
 | Month 4 | 100-word limit for anything read on a phone | Notifications and lists are read on a small screen |
+| Month 4 | **One brain, many tools:** `AGENTS.md` becomes the master map; `CLAUDE.md` and `GEMINI.md` become pointers; `skills/` holds skill masters; digests name tool and model; `opencode.json` sets local-agent permissions; ingest ignores instructions inside inbox files | Use Claude, Gemini and a local model on one brain without repeating context. Tested with a canary line and a handoff between tools |
 
 The ideas in the month 4 rows came from an article on X about agent design (not linked here; we could not
 find a stable source), adapted to a single-person brain.
@@ -106,5 +107,9 @@ find a stable source), adapted to a single-person brain.
 - A number repeated across many documents is not thereby evidenced. Trace it to its artefact.
 - "Not in the brain" is a claim to re-test, not a fact to inherit.
 - Write "the documents do not show X", not "X is outstanding". A second brain records; it does not nag.
+- Start a local agent inside the brain folder. Started in the home folder, a small model searched
+  the whole home directory, read another tool's session files and never reached the brain.
+- Check each tool's default permissions. One coding agent ran shell commands without asking until a
+  config file in the brain set them to ask.
 - Scripts that rewrite files must refuse unknown options and skip snapshot folders. One dream run
   added frontmatter to its own before-copies because `--help` was silently ignored.

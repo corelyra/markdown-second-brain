@@ -10,10 +10,11 @@ Checks:
  2. Undreamed session digests older than 8 days (a missed dream).
  3. Missing dream report for the most recent Sunday.
  4. MEMORY.md "Standing context" older than 14 days.
- 5. Long digit strings (7+ digits) in always-loaded files (MEMORY.md, CLAUDE.md).
+ 5. Long digit strings (7+ digits) in always-loaded files (MEMORY.md, AGENTS.md).
  6. Files in notes/, people/, projects/ without description/updated frontmatter.
  7. Active projects not updated for 30+ days.
  8. INDEX.md older than the newest note (index needs a rebuild).
+ 9. AGENTS.md over 200 lines; CLAUDE.md or GEMINI.md no longer a short pointer to AGENTS.md.
 """
 import datetime as dt, os, re, sys
 from pathlib import Path
@@ -96,7 +97,7 @@ else:
     add("Stale context", "MEMORY.md has no dated \"Standing context\" heading (format: last touched 1 Nov 2026)")
 
 # 5. numbers in always-loaded files
-for name in ("MEMORY.md", "CLAUDE.md"):
+for name in ("MEMORY.md", "AGENTS.md"):
     txt = (ROOT / name).read_text(encoding="utf-8", errors="replace")
     for i, line in enumerate(txt.splitlines(), 1):
         for hit in re.findall(r"\b\d{7,}\b", line):
@@ -119,6 +120,18 @@ for folder in ("notes", "people", "projects"):
             up = date_of(fm.get("updated"))
             if st and st.group(1).lower() == "active" and up and (TODAY - up).days > 30:
                 add("Quiet project", f"`projects/{p.name}` is active but last updated {up} ({(TODAY - up).days} days)")
+
+# 9. map and pointer files
+agents = ROOT / "AGENTS.md"
+if not agents.exists():
+    add("Map", "AGENTS.md is missing")
+elif len(agents.read_text(encoding="utf-8", errors="replace").splitlines()) > 200:
+    add("Map", "AGENTS.md is over 200 lines; propose what to move into procedures/ or notes/")
+for name in ("CLAUDE.md", "GEMINI.md"):
+    p = ROOT / name
+    txt = p.read_text(encoding="utf-8", errors="replace") if p.exists() else ""
+    if "@AGENTS.md" not in txt or len(txt.splitlines()) > 5:
+        add("Map", f"`{name}` is missing or no longer a short pointer to AGENTS.md")
 
 # 8. INDEX.md freshness
 idx = ROOT / "INDEX.md"

@@ -1,6 +1,6 @@
 ---
 description: "What any agent writes into the brain during and at the end of a session: the write-as-you-go rules and the session digest that feeds the weekly dream."
-updated: 2026-11-01
+updated: 2026-11-06
 ---
 # Capture: writing memory while working
 
@@ -26,8 +26,8 @@ When the owner corrects you, the correction is often worth more than the fixed o
 |---|---|
 | A fact | the matching `notes/`, `people/` or `projects/` file |
 | A choice between options | `decisions.md` |
-| A preference they repeat | `CLAUDE.md`, Standing rules (propose it; the owner approves) |
-| A technique that worked | `procedures/<name>.md` or a skill |
+| A preference they repeat | `AGENTS.md`, Standing rules (propose it; the owner approves) |
+| A technique that worked | `procedures/<name>.md` or `skills/<name>/SKILL.md` |
 | A sequence they want repeated | a scheduled task that follows a procedure |
 | Something that must never happen | a mechanical gate (script check, folder rule), not prose |
 
@@ -36,7 +36,7 @@ Before signing off from any session that touched the brain or learned something 
 append to `sessions/YYYY-MM-DD.md` (create it if absent; several sessions can share a day):
 
 ```
-## HH:MM  <surface: desktop app / Claude Code / chat>  <one-line topic>
+## HH:MM  <tool, model: e.g. Claude Code, Claude / Antigravity, Gemini / OpenCode, a local model>  <one-line topic>
 - Asked: what the owner wanted
 - Learned: facts stated or proven, each with its source
 - Changed: brain files written, one path per line
@@ -45,5 +45,8 @@ append to `sessions/YYYY-MM-DD.md` (create it if absent; several sessions can sh
 
 Five to fifteen lines. Facts only; no transcript. This is the dream's raw material, so an
 unrecorded session is invisible to it. A session that learned nothing writes nothing.
+
+Every approved tool with the folder open follows this procedure and writes its own digest. Note in
+the digest any usage limit the tool hit. One tool writes at a time (AGENTS.md, "One brain, many tools").
 
 Chat surfaces that cannot write to this folder should tell the owner to drop the fact in `Inbox/`.

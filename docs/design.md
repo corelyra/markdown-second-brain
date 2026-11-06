@@ -39,8 +39,22 @@ Why each part exists, and the failure it prevents.
 - **Reference numbers** live in their own note, not in the always-loaded file.
 
 ## Masters and copies
-`CLAUDE.md` and `notes/writing-standard.md` are the masters. `PROJECT-INSTRUCTIONS.md` and anything
-pasted into other tools are copies. Change the master first; the dream reports drift between them.
+`AGENTS.md` and `notes/writing-standard.md` are the masters. `CLAUDE.md` and `GEMINI.md` are
+one-line pointers. `PROJECT-INSTRUCTIONS.md`, skills pasted into tools and anything else pasted into
+other tools are copies. Change the master first; the dream reports drift between them.
+
+## One brain, many tools
+- **One map.** Claude, Gemini (Antigravity), Codex and OpenCode all read `AGENTS.md`, directly or
+  through a pointer file. Rules that load a file by `@import` are written out in plain words too,
+  because not every tool expands imports.
+- **One source of truth.** Tools write durable facts into the brain, not only into their own memory.
+  Where a tool's memory disagrees with the brain, the brain wins.
+- **Every tool writes digests**, naming tool and model, so the dream folds in work from all of them
+  and reports sessions per tool.
+- **One writer at a time**, so the sync service does not make conflict copies.
+- **Permissions in files.** `opencode.json` makes OpenCode ask before edits and commands and blocks
+  access outside the folder. Other tools ask by default; check yours.
+- **Skills as files.** `skills/<name>/SKILL.md` holds the master copy of each skill you write.
 
 ## What it deliberately does not do
 - No database, no vector store, no plugin. Grep and Markdown are enough at personal scale.

@@ -1,4 +1,4 @@
 # README
 
-This is a second brain: plain Markdown files, mapped by CLAUDE.md.
-Open CLAUDE.md first. Agents that do not read CLAUDE.md: treat it as the map and INDEX.md as the catalogue.
+This is a second brain: plain Markdown files, mapped by AGENTS.md.
+Open AGENTS.md first. CLAUDE.md and GEMINI.md only point to it. INDEX.md is the catalogue.

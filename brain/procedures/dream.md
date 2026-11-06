@@ -1,6 +1,6 @@
 ---
 description: "The weekly dreaming pass: an out-of-band batch job that verifies, organises and enriches the brain from the week's session digests. Run on the weekly schedule or when the owner says 'dream'."
-updated: 2026-11-01
+updated: 2026-11-06
 ---
 # Dream: the weekly consolidation pass
 
@@ -19,7 +19,7 @@ Runs once a week as a scheduled task, or on request.
 - Do not invent. A fact enters a note only if a session digest or a document states it.
 
 ## 0. Pre-flight
-1. Read `CLAUDE.md`, `MEMORY.md` and `TODO.md`. Read the newest entries of the long logs with
+1. Read `AGENTS.md`, `MEMORY.md` and `TODO.md`. Read the newest entries of the long logs with
    `python3 scripts/log-recent.py decisions.md` and `python3 scripts/log-recent.py LEARNINGS.md`.
 2. List `sessions/*.md` (not `README.md`, not `dreamed/`). No digests? Still run steps 2 and 3;
    they catch drift that no session reports.
@@ -32,6 +32,8 @@ Runs once a week as a scheduled task, or on request.
    reached the folder).
 
 ## 1. Enrich: fold the week's sessions into the brain
+Digests come from every approved tool (AGENTS.md, "One brain, many tools"). Count sessions per tool
+and model, and note any usage limit a digest records, for the report's "Tools this week".
 One digest at a time, oldest first. For each "Learned" line:
 - Already held and consistent: nothing to do.
 - New and sourced: **apply**. Write it into the right file per `procedures/ingest.md` steps 4 to 8,
@@ -77,8 +79,8 @@ Apply:
   plus two to five relative paths of files that the file already mentions or that share its person,
   organisation or project. Links only, no new facts. An agent can then follow links from file to
   file instead of grepping the tree. Note in the report how many files still lack the line.
-- Compare `PROJECT-INSTRUCTIONS.md` with `CLAUDE.md` and `notes/writing-standard.md`. List any
-  difference under "Drift found".
+- Compare `PROJECT-INSTRUCTIONS.md` with `AGENTS.md` and `notes/writing-standard.md`. Check that
+  `CLAUDE.md` and `GEMINI.md` still only point to `AGENTS.md`. List any difference under "Drift found".
 - `Status: done` projects not mentioned in any session for 60 days: move to `archive/`.
 - `python3 scripts/build-index.py`, last.
 
@@ -102,6 +104,7 @@ Sessions consolidated: n (list)   Files changed: n   Snapshot: archive/dream-sna
 ## Needs the owner (proposals, contradictions, open loops)
 ## Drift found (stale, broken, oversize)
 ## Watchdog (output of scripts/watchdog.py and the scheduled-task check)
+## Tools this week (sessions per tool and model, usage limits hit)
 ```
 Then append a one-line dated entry to `LEARNINGS.md` only if the dream itself taught something
 (a procedure that failed, a check that proved useless). Routine runs do not earn an entry.
