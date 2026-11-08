@@ -28,6 +28,8 @@ your brain.
 | Quarantine | Credentials found during ingest go to a folder agents never read out of | `_sensitive-hold/` |
 | Masters and copies | One source of truth; copies for other tools; drift checked weekly | `AGENTS.md`, `PROJECT-INSTRUCTIONS.md` |
 | Watchdog | A read-only health check of the brain itself | `scripts/watchdog.py` |
+| Job check | Did every scheduled job really run? Judged by the proof file each leaves, not by a "succeeded" status | `scripts/jobcheck.py`, `notes/scheduled-jobs.md` |
+| Star-schema memory | `MEMORY.md` stays a lean hub: one line per topic, each linking to its detail file | `brain/MEMORY.md`, `procedures/capture.md` |
 | Inline and spill | Newest log entries in full, the rest counted and searchable | `scripts/log-recent.py` |
 | Writing standard | ASD-STE100 clarity rules plus a banned-word list for AI prose | `notes/writing-standard.md` |
 
@@ -45,7 +47,7 @@ docs/      design notes and history
 1. Copy `brain/` to a synced folder (iCloud Drive, Dropbox, OneDrive) and rename it.
 2. Replace every `{{...}}` placeholder in `AGENTS.md` and `PROJECT-INSTRUCTIONS.md`
    (`grep -rn '{{' .` finds them all; see the table below).
-3. Fill `MEMORY.md` with your core facts. Keep it to about 70 lines.
+3. Fill `MEMORY.md` with your core facts: one line per topic, each linking to the note that holds the detail. Keep it to about 60 lines.
 4. Point an agent at the folder:
    - **Claude Code:** run `claude` in the folder. It reads `CLAUDE.md`, which loads `AGENTS.md`.
    - **Claude desktop app:** add the folder to the session.
@@ -116,6 +118,7 @@ alias brain-ollama='cd ~/path/to/your/brain && ollama launch opencode'
 cd example
 python3 scripts/build-index.py
 python3 scripts/watchdog.py
+python3 scripts/jobcheck.py
 python3 scripts/log-recent.py decisions.md
 ```
 The watchdog reports what a dream would fix. On the example it will flag a missing dream report for

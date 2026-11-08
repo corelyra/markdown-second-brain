@@ -13,11 +13,12 @@ Scan this (or grep `^description:`) to find the right file, then open only that 
 - `people/harbour-lettings.md` Harbour Lettings, the letting agent for Alex's Leeds flat: tenancy renewal, repairs and the kitchen refit request. _(2026-10-25)_
 - `people/northwind-analytics.md` Northwind Analytics, Alex's employer since 2024: role, team, and where the contract detail sits. _(2026-10-12)_
 
-## Notes (3)
+## Notes (4)
 
 - `notes/home-insurance.md` Alex's contents insurance: insurer, cover, renewal month, and the October 2026 renewal decision. Read for any insurance or claim question. _(2026-10-25)_
 - `notes/reference-numbers.md` Reference numbers that are not secrets (policy, customer, tenancy references), kept out of MEMORY.md. Read when a form or call needs one. _(2026-10-20)_
+- `notes/scheduled-jobs.md` Fictional register of Alex's scheduled jobs: the weekly dream and the phone capture shortcut, with the proof each leaves. Read when a job seems missed. _(2026-10-25)_
 - `notes/writing-standard.md` The writing standard for every prose reply an agent drafts for the owner: ASD-STE100 clarity rules plus a banned-word list. Read before drafting any prose, or when a reply sounds like a machine. _(2026-11-01)_
 
 ## Sources
-- Built 2026-11-01 from 7 files.
+- Built 2026-11-08 from 8 files.

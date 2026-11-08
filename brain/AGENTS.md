@@ -43,6 +43,9 @@ Strands that live here: {{STRANDS}}.
 
 ## Always loaded
 At the start of every session, read `MEMORY.md`. It holds the core facts about {{OWNER_SHORT}}.
+`MEMORY.md` is the hub of a star schema: one short line per topic, each ending in a link to the fact
+or metadata file that holds the detail. New detail goes into that file, never into `MEMORY.md`. About
+60 lines at most; the dream checks it.
 
 Everything else loads on demand. `decisions.md` and `LEARNINGS.md` are long logs. When a past
 choice or lesson may apply, run `python3 scripts/log-recent.py decisions.md` (newest 15 entries),
@@ -87,10 +90,10 @@ Never read the whole tree.
 | `output/` | Finished artefacts: `briefs/`, `reports/` (dream reports live here), `posts/` | Built from notes, never from `Inbox/` |
 | `archive/` | Dormant projects, stale notes, `dream-snapshots/` (before-copies) | Searched only on request |
 | `_sensitive-hold/` | Quarantined credentials, recovery material, identity numbers | See Standing rule 3 |
-| `templates/` | Skeletons for note, person, project | Copy, don't edit |
+| `templates/` | Skeletons for note, person, project, scheduled-jobs register | Copy, don't edit |
 | `skills/` | One folder per skill: `SKILL.md` plus any files it needs | Master copies; paste them into tools that keep their own skills |
-| `scripts/` | `build-index.py`, `frontmatter.py`, `log-recent.py`, `watchdog.py` (all read the folder they sit in) | Python 3, standard library only |
-| `MEMORY.md` | Core facts about {{OWNER_SHORT}}, always loaded | About 70 lines; curated |
+| `scripts/` | `build-index.py`, `frontmatter.py`, `log-recent.py`, `watchdog.py`, `jobcheck.py` (all read the folder they sit in) | Python 3, standard library only |
+| `MEMORY.md` | Core facts about {{OWNER_SHORT}}, always loaded; hub of a star schema | About 60 lines; one line per topic, each linking to its detail file |
 | `TODO.md` | Running to-do list (no-deadline admin, loose ends) | Add when {{OWNER_SHORT}} names a to-do; the dream reports it weekly |
 | `decisions.md` | Dated decisions: what, why, source | Append; never edit past entries |
 | `LEARNINGS.md` | Dated lessons | Append |

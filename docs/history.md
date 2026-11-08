@@ -93,7 +93,8 @@ find a stable source), adapted to a single-person brain.
   morning to-do list. Both were dropped: for a brain of mostly settled records, a weekly dream is enough.
 - **Scheduled dream without the folder attached.** The first scheduled dream ran in the cloud and
   could not reach the folder, so it did nothing. It worked once the scheduled task carried the
-  folder. The dream's pre-flight now flags a scheduled task that finishes in under a minute.
+  folder. The pre-flight first flagged any task that finished in under a minute; that proved wrong
+  (see the lessons), and the job check replaced it.
 - **Moving working notes to another app.** Working notes moved from one notes app to another for a
   few weeks, then back. The second-inbox pattern survived; the app choice did not matter.
 - **Nightly dream.** Considered and rejected in favour of weekly.
@@ -111,5 +112,10 @@ find a stable source), adapted to a single-person brain.
   the whole home directory, read another tool's session files and never reached the brain.
 - Check each tool's default permissions. One coding agent ran shell commands without asking until a
   config file in the brain set them to ask.
+- Judge a scheduled job by the proof it leaves on disk, never by its status or run time. A backup
+  missed two weeks with no error logged, while cloud runs that did their work showed as finished in
+  seconds. A register of jobs with their proof files, checked weekly, catches both.
+- Keep `MEMORY.md` a lean hub that links out, like the centre of a star schema. Detail written into
+  it grows the file every session; detail kept in fact files loads only when needed.
 - Scripts that rewrite files must refuse unknown options and skip snapshot folders. One dream run
   added frontmatter to its own before-copies because `--help` was silently ignored.

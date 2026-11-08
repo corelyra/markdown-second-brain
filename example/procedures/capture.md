@@ -13,7 +13,9 @@ Record without asking when the owner states something plainly or a document prov
 - a decision the owner makes: a dated entry in `decisions.md`;
 - a lesson from something that went wrong or right: a dated entry in `LEARNINGS.md`;
 - a to-do the owner names ("to do", "for later", "eventually"): a line in `TODO.md` under `## Open`;
-- a stable fact about the owner: `MEMORY.md`, only if it belongs in every session's head.
+- a stable fact about the owner: write the detail into its fact file (note, person or project) first.
+  In `MEMORY.md` add or change at most a one-line summary with a link to that file, and only if it
+  belongs in every session's head (`MEMORY.md` is the hub of a star schema).
 
 Ask first when a fact would overwrite something already held, belongs to another household member,
 is sensitive, or is your own inference. Your conclusions are not facts; they go in the digest as
