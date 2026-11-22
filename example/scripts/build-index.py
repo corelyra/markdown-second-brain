@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Rebuild INDEX.md: one line per file in notes/, people/, projects/, from each file's
-frontmatter description. Generated; never edit INDEX.md by hand.
+"""Rebuild INDEX.md: one line per file in notes/, people/, projects/ and output/briefs/, from each
+file's frontmatter description. Generated; never edit INDEX.md by hand.
 
 Usage: python3 scripts/build-index.py [--dry-run]
   --dry-run   print the index instead of writing INDEX.md
@@ -17,7 +17,8 @@ if _bad:
 DRY = '--dry-run' in sys.argv
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECTIONS = [('projects', 'Projects'), ('people', 'People and organisations'), ('notes', 'Notes')]
+SECTIONS = [('projects', 'Projects'), ('people', 'People and organisations'), ('notes', 'Notes'),
+            ('output/briefs', 'Briefs (filed answers; interpretations, not sources of truth)')]
 
 def meta(path):
     t = open(path, encoding='utf-8').read()

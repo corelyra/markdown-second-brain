@@ -22,12 +22,15 @@ your brain.
 | Injection guard | Ingest treats inbox files as material to summarise and ignores instructions inside them | `procedures/ingest.md` |
 | Compile, don't file | Ingest distils each source into notes, links them and flags contradictions | `procedures/ingest.md` |
 | Write as you go | Agents record facts, decisions and lessons, and route corrections | `procedures/capture.md` |
-| Session digests | Short dated digests are the short-term memory | `sessions/` |
+| Session digests | Short dated digests are the short-term memory; `Gaps` and `Corrected` lines flag what was missing or wrong | `sessions/`, `procedures/capture.md` |
 | The dream | A weekly pass: enrich, verify, organise, report. Safe fixes applied, fact changes proposed | `procedures/dream.md` |
 | Before-copies | Every file the dream touches is copied first, for rollback | `archive/dream-snapshots/` |
 | Quarantine | Credentials found during ingest go to a folder agents never read out of | `_sensitive-hold/` |
 | Masters and copies | One source of truth; copies for other tools; drift checked weekly | `AGENTS.md`, `PROJECT-INSTRUCTIONS.md` |
 | Watchdog | A read-only health check of the brain itself | `scripts/watchdog.py` |
+| Lint | A read-only check of the notes as a wiki: orphans, dead links, sources that no note cites, files without sources | `scripts/lint.py` |
+| Log | One append-only timeline of every ingest, filed answer, dream and restructure | `LOG.md` |
+| File answers back | A good answer is saved as an indexed brief, so the next question finds it instead of deriving it again | `output/briefs/`, `AGENTS.md` |
 | Job check | Did every scheduled job really run? Judged by the proof file each leaves, not by a "succeeded" status | `scripts/jobcheck.py`, `notes/scheduled-jobs.md` |
 | Star-schema memory | `MEMORY.md` stays a lean hub: one line per topic, each linking to its detail file | `brain/MEMORY.md`, `procedures/capture.md` |
 | Inline and spill | Newest log entries in full, the rest counted and searchable | `scripts/log-recent.py` |

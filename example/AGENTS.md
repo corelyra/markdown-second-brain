@@ -47,7 +47,7 @@ At the start of every session, read `MEMORY.md`. It holds the core facts about A
 or metadata file that holds the detail. New detail goes into that file, never into `MEMORY.md`. About
 60 lines at most; the dream checks it.
 
-Everything else loads on demand. `decisions.md` and `LEARNINGS.md` are long logs. When a past
+Everything else loads on demand. `decisions.md`, `LEARNINGS.md` and `LOG.md` are long logs. When a past
 choice or lesson may apply, run `python3 scripts/log-recent.py decisions.md` (newest 15 entries),
 or add a keyword to search the rest.
 
@@ -55,7 +55,7 @@ or add a keyword to search the rest.
 1. Every file in `notes/`, `people/`, `projects/` opens with a two-line frontmatter:
    `description` (what it holds, when to read it) and `updated` (last edit).
 2. Search the descriptions first, then open only the files that match:
-   `grep -H '^description:' notes/*.md people/*.md projects/*.md | grep -i <word>`
+   `grep -H '^description:' notes/*.md people/*.md projects/*.md output/briefs/*.md | grep -i <word>`
    `INDEX.md` holds the same lines as one list (generated; for surfaces without grep).
 3. Still nothing? Full-text grep over `notes/ people/ projects/`, then `Inbox/processed/` for detail
    or original wording, then `INGEST-REPORT.md` (the fact may sit in an unreadable document).
@@ -87,14 +87,15 @@ Never read the whole tree.
 | `projects/` | Work with `Status: active / paused / done` and `Next step:` | One per file |
 | `sessions/` | Session digests, dated; consolidated ones move to `sessions/dreamed/` | Short-term memory; not a source of truth until dreamed |
 | `procedures/` | How-to files for repeatable jobs | Follow them; propose changes, don't drift |
-| `output/` | Finished artefacts: `briefs/`, `reports/` (dream reports live here), `posts/` | Built from notes, never from `Inbox/` |
+| `output/` | Finished artefacts: `briefs/`, `reports/` (dream reports live here), `posts/` | Built from notes, never from `Inbox/`; briefs carry frontmatter and are indexed |
 | `archive/` | Dormant projects, stale notes, `dream-snapshots/` (before-copies) | Searched only on request |
 | `_sensitive-hold/` | Quarantined credentials, recovery material, identity numbers | See Standing rule 3 |
 | `templates/` | Skeletons for note, person, project, scheduled-jobs register | Copy, don't edit |
 | `skills/` | One folder per skill: `SKILL.md` plus any files it needs | Master copies; paste them into tools that keep their own skills |
-| `scripts/` | `build-index.py`, `frontmatter.py`, `log-recent.py`, `watchdog.py`, `jobcheck.py` (all read the folder they sit in) | Python 3, standard library only |
+| `scripts/` | `build-index.py`, `frontmatter.py`, `log-recent.py`, `watchdog.py`, `lint.py`, `jobcheck.py` (all read the folder they sit in) | Python 3, standard library only |
 | `MEMORY.md` | Core facts about Alex, always loaded; hub of a star schema | About 60 lines; one line per topic, each linking to its detail file |
 | `TODO.md` | Running to-do list (no-deadline admin, loose ends) | Add when Alex names a to-do; the dream reports it weekly |
+| `LOG.md` | One line per operation: ingest, query, lint, restructure | Append; `## [YYYY-MM-DD] op \| title` |
 | `decisions.md` | Dated decisions: what, why, source | Append; never edit past entries |
 | `LEARNINGS.md` | Dated lessons | Append |
 | `INDEX.md` | Generated list of every file's description | Never edit by hand |
@@ -121,3 +122,13 @@ Say what the file shows, then which part is your interpretation.
 If the brain holds only part of the answer, give that part, name what is missing, and say where the
 rest may sit: email, `INGEST-REPORT.md`, or a file still in the inbox. For facts from outside the
 brain, name the source and say how sure you are.
+
+### File good answers back (exploration compounds)
+An answer that took real work (a comparison, an analysis, a link across three or more files) is
+worth keeping. Offer to file it; file it without asking when Alex says "keep that".
+- Write it to `output/briefs/YYYY-MM-DD-<slug>.md` with the usual frontmatter, the question as the
+  title, the answer, and `## Sources` naming every note it drew on.
+- A brief is an interpretation, never a source of truth. A new fact goes into its note first; the
+  brief cites the note. Mark your own conclusions as conclusions.
+- Run `python3 scripts/build-index.py` (briefs are indexed) and append `## [YYYY-MM-DD] query | <title>` to `LOG.md`.
+- Before you answer a broad question, search the brief descriptions as well. Do not derive twice.

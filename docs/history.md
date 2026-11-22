@@ -84,6 +84,8 @@ This produced "memory v2", the largest single change (see the timeline).
 | Month 4 | **Related lines** (chain of recall): two to five links under each summary, added by the dream five files a week | Agents follow links instead of grepping the whole tree |
 | Month 4 | 100-word limit for anything read on a phone | Notifications and lists are read on a small screen |
 | Month 4 | **One brain, many tools:** `AGENTS.md` becomes the master map; `CLAUDE.md` and `GEMINI.md` become pointers; `skills/` holds skill masters; digests name tool and model; `opencode.json` sets local-agent permissions; ingest ignores instructions inside inbox files | Use Claude, Gemini and a local model on one brain without repeating context. Tested with a canary line and a handoff between tools |
+| Month 4 | **Gaps and corrections:** two digest lines, `Gaps` and `Corrected`; the dream resolves them and reports them | From Harrison Chase's "knowledge factory" post on the LangChain blog. Before this, a failed lookup or a correction that no rule followed left no trace for the dream |
+| Month 4 | **Log, lint and filed answers:** `LOG.md` as one timeline of operations; `scripts/lint.py` for orphans, dead links and uncited sources; good answers filed as indexed briefs | A second check against Karpathy's LLM Wiki pattern showed three parts missing. The first lint run found more than a third of the files without an inbound link |
 
 The ideas in the month 4 rows came from an article on X about agent design (not linked here; we could not
 find a stable source), adapted to a single-person brain.
@@ -117,5 +119,8 @@ find a stable source), adapted to a single-person brain.
   seconds. A register of jobs with their proof files, checked weekly, catches both.
 - Keep `MEMORY.md` a lean hub that links out, like the centre of a star schema. Detail written into
   it grows the file every session; detail kept in fact files loads only when needed.
+- Tune a lint to the brain's own conventions before you trust its counts. The first pattern missed
+  paths with spaces and shorthand such as a second file name after a comma, and reported dead links
+  that were not dead.
 - Scripts that rewrite files must refuse unknown options and skip snapshot folders. One dream run
   added frontmatter to its own before-copies because `--help` was silently ignored.

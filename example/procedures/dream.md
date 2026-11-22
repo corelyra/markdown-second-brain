@@ -1,6 +1,6 @@
 ---
 description: "The weekly dreaming pass: an out-of-band batch job that verifies, organises and enriches the brain from the week's session digests. Run on the weekly schedule or when the owner says 'dream'."
-updated: 2026-11-08
+updated: 2026-11-21
 ---
 # Dream: the weekly consolidation pass
 
@@ -32,7 +32,10 @@ Runs once a week as a scheduled task, or on request.
    run failed, that did not fire when its schedule says it should, or that is disabled. Do not trust
    "succeeded" or the run time: runs that did their work have shown as finished in seconds. Proof on
    disk decides (next step).
-5. **Job check:** did every scheduled job outside the brain really run? The register is
+5. **Lint:** run `python3 scripts/lint.py` and paste its output into the report under `## Lint`.
+   It counts orphans, dead links, uncited sources and unsourced files, and it checks `LOG.md`.
+   The script changes nothing; steps 2 and 3 do the fixes.
+6. **Job check:** did every scheduled job outside the brain really run? The register is
    `notes/scheduled-jobs.md` (copy `templates/scheduled-jobs.md` to start one). Run
    `python3 scripts/jobcheck.py` where the jobs' proof files are visible, usually on the computer
    itself, and paste its table into the report under `## Jobs`. Any MISSING or LATE job goes into the
@@ -48,6 +51,14 @@ One digest at a time, oldest first. For each "Learned" line:
 - Contradicts what the brain holds: **propose**. Add it under the note's `## Open questions` as
   "source A says X; source B says Y" and list it in the report.
 - A decision or lesson not yet logged: **apply** to `decisions.md` / `LEARNINGS.md`, dated to the session.
+
+**Gaps and corrections.** Handle these digest lines before you move the digest:
+- A `Gaps` line that names a broken path or a renamed file: check it on disk, then **apply** the fix.
+- A `Gaps` line that names a wrong fact, or a fault in a procedure or a skill: **propose** the fix.
+- A `Gaps` line that names missing knowledge: list it in the report. When two or more sessions flag
+  the same gap, propose a note, a procedure or a to-do for it.
+- A `Corrected` line: check that the rule or skill edit it names exists. If it does not, **propose**
+  the edit to the matching `skills/<name>/SKILL.md`, procedure or Standing rule.
 
 Carry every "Open" line into the report. A to-do the owner named goes into `TODO.md` under `## Open`
 if it is not there yet (apply). Any question raised, and any expiry, renewal or deadline date
@@ -73,6 +84,14 @@ Report, and fix only the mechanical faults:
   proposal, never a silent fix.
 - **MEMORY.md as a star schema:** every bullet ends in a link to a file that exists, and no fact lives
   only in MEMORY.md. Add a missing link when the target file clearly holds the fact (apply).
+- **Uncited sources** (from the lint): a copy in `Inbox/processed/` that no note names was
+  filed, not compiled. Compile up to five per run per `procedures/ingest.md` steps 4 to 8 (apply),
+  newest first. Skip the context folders named in `scripts/lint.py` (`CONTEXT`). Report the count
+  per folder.
+- **Contradiction sweep:** take the five files in `notes/`, `people/` and `projects/` with the newest
+  `updated` date. For each, read the files that link to it and compare names, dates, amounts and
+  statuses. Check a mismatch against the primary document first. If it stands, add it under the
+  note's `## Open questions` as "file A says X; file B says Y" (propose).
 - **Open questions:** count files with an unresolved `## Open questions` section and name the three oldest.
 
 ## 3. Organise: keep the shape clean
@@ -83,6 +102,10 @@ Apply:
 - Missing `## Sources`, missing title or summary line, filenames that break the naming rules
   (rename with `mv -n`, then fix inbound links).
 - Cross-links between clearly related files (same person, same organisation, same project).
+- **Orphans and dead links** (from the lint): give up to five orphans an inbound link, newest
+  first: a `Related:` line in the file that names the orphan's subject, or a `MEMORY.md` line if it
+  belongs in every session's head. Fix a dead link when the target clearly moved (a digest now in
+  `sessions/dreamed/`); otherwise list it.
 - **Related lines (chain of recall):** pick up to five files that lack a `Related:` line, active
   projects first, then the notes they cite. Add one line directly under the summary: `Related: `
   plus two to five relative paths of files that the file already mentions or that share its person,
@@ -98,6 +121,10 @@ Propose:
 - MEMORY.md over about 60 lines, or detail that crept in: propose moving it out to its fact file.
 - A preference the owner repeated in two or more sessions: propose it as a Standing rule.
 - A procedure an agent had to rediscover: propose a new `procedures/` file.
+- **Missing pages:** a person, organisation or topic that three or more files name but that has no
+  file of its own: propose the file and name the files that mention it.
+- **Briefs that went stale:** a brief in `output/briefs/` whose cited notes changed after the brief
+  was written: propose a refresh or a move to `archive/`.
 
 ## 4. Report
 Write `output/reports/dream-YYYY-MM-DD.md`, at most one screen:
@@ -109,13 +136,16 @@ Sessions consolidated: n (list)   Files changed: n   Snapshot: archive/dream-sna
 ## Expiries (next 12 months, plus any new this week)
 ## To-dos (open items from TODO.md)
 ## Questions raised this week
+## Gaps and corrections (flagged in digests; fixes applied or proposed)
 ## Applied
 ## Needs the owner (proposals, contradictions, open loops)
 ## Drift found (stale, broken, oversize)
 ## Watchdog (output of scripts/watchdog.py and the scheduled-task check)
+## Lint (output of scripts/lint.py)
 ## Jobs (output of scripts/jobcheck.py)
 ## Tools this week (sessions per tool and model, usage limits hit)
 ```
+Append `## [YYYY-MM-DD] lint | Weekly dream` to `LOG.md` with the report path and the files changed.
 Then append a one-line dated entry to `LEARNINGS.md` only if the dream itself taught something
 (a procedure that failed, a check that proved useless). Routine runs do not earn an entry.
 

@@ -30,6 +30,18 @@ Why each part exists, and the failure it prevents.
 - **Before-copies** in `archive/dream-snapshots/<date>/` give a rollback in synced folders where git
   is awkward.
 - The **watchdog** checks the brain's own health first.
+- The **lint** (`scripts/lint.py`) checks the notes as a wiki: orphans, dead links, sources that no
+  note cites (filed but never compiled), files without sources. The dream adds two checks only a model can do:
+  a contradiction sweep across linked files, and pages that are missing (a subject three files name
+  but none describes).
+
+## Logging and filing back
+- **`LOG.md`** is one append-only timeline of operations (`## [YYYY-MM-DD] op | title`): every
+  ingest, filed answer, dream and restructure. Session digests say what a session learned; the log
+  says what happened to the brain, in order, in one greppable file.
+- **Good answers are filed back** as briefs in `output/briefs/`, with frontmatter, and indexed. An
+  analysis done once is found by the next question instead of derived again. A brief is an
+  interpretation that cites its notes; facts still live only in the notes.
 
 ## Safety
 - **Standing rules** are numbered, short and kept apart from the folder map, so a long session

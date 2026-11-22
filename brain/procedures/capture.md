@@ -1,6 +1,6 @@
 ---
 description: "What any agent writes into the brain during and at the end of a session: the write-as-you-go rules and the session digest that feeds the weekly dream."
-updated: 2026-11-06
+updated: 2026-11-21
 ---
 # Capture: writing memory while working
 
@@ -29,9 +29,16 @@ When the owner corrects you, the correction is often worth more than the fixed o
 | A fact | the matching `notes/`, `people/` or `projects/` file |
 | A choice between options | `decisions.md` |
 | A preference they repeat | `AGENTS.md`, Standing rules (propose it; the owner approves) |
+| "Keep that answer" or "file that" | `output/briefs/YYYY-MM-DD-<slug>.md` (see `AGENTS.md`, "Answering") |
 | A technique that worked | `procedures/<name>.md` or `skills/<name>/SKILL.md` |
+| A correction to what a skill or procedure produced | that `skills/<name>/SKILL.md` or `procedures/<name>.md` (propose the edit; the owner approves) |
 | A sequence they want repeated | a scheduled task that follows a procedure |
 | Something that must never happen | a mechanical gate (script check, folder rule), not prose |
+
+**Flag what is missing or wrong.** When you look for something in the brain and do not find it, or
+you find a path, a fact, a procedure or a skill that is wrong, write it in the digest under `Gaps`:
+the file, the fault and your suggested fix. Work round the gap for the task in hand. Change the file
+only when the owner states the correction in the session; otherwise the dream resolves the flag.
 
 ## At the end: the session digest
 Before signing off from any session that touched the brain or learned something worth keeping,
@@ -42,11 +49,15 @@ append to `sessions/YYYY-MM-DD.md` (create it if absent; several sessions can sh
 - Asked: what the owner wanted
 - Learned: facts stated or proven, each with its source
 - Changed: brain files written, one path per line
+- Corrected: what the owner corrected in a reply or draft, and the rule or skill edit proposed for it
+- Gaps: what you looked for and did not find, or found wrong: file, fault, suggested fix
 - Open: loose ends, contradictions noticed, questions for the owner
 ```
 
 Five to fifteen lines. Facts only; no transcript. This is the dream's raw material, so an
 unrecorded session is invisible to it. A session that learned nothing writes nothing.
+A session that hit a gap still writes its `Gaps` line. Leave out `Corrected` and `Gaps` when there is
+nothing to report.
 
 Every approved tool with the folder open follows this procedure and writes its own digest. Note in
 the digest any usage limit the tool hit. One tool writes at a time (AGENTS.md, "One brain, many tools").

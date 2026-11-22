@@ -27,4 +27,4 @@ checks for them.
 - What is live this month: the main project, the current search or move, the next big date, each with its project file.
 
 ## How I work
-- Tools, routines and preferences an agent should respect. See `notes/writing-standard.md`, `notes/scheduled-jobs.md`.
+- Tools, routines and preferences an agent should respect. See `notes/writing-standard.md`. Scheduled jobs: start the register from `templates/scheduled-jobs.md`.
