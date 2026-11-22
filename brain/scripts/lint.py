@@ -19,6 +19,8 @@ Checks:
  3. Uncited sources: Markdown copies in Inbox/processed/ that no note names
     (filed, not compiled), counted per folder. Folders listed in CONTEXT below are
     searched as context and never compiled; their count is information only.
+    Folders listed in HELD below hold other household members' records (Standing
+    rule 7): their copies are never compiled, and their count is information only.
  4. Unsourced files: notes, people or projects with nothing under "## Sources".
  5. LOG.md: missing, or its newest entry is more than 14 days older than the newest note.
 """
@@ -43,6 +45,9 @@ WIKI = ("notes", "people", "projects")
 # Folders under Inbox/processed/ that hold context copies (a notes app export, transcripts).
 # Name them here, e.g. ("notes-app", "voice-memos").
 CONTEXT = ()
+# Folders under Inbox/processed/ whose copies are never compiled, e.g. ("family/partner",).
+# A copy that touches the owner's own documents is still cited by hand.
+HELD = ()
 PATH = re.compile(r"(?<![\w/.<{~-])((?:\.\./)*[\w][\w./-]*\.md)\b")
 PROCESSED = ROOT / "Inbox" / "processed"
 
@@ -119,16 +124,21 @@ if dead:
 
 # A copy counts as cited when a note names its path, with or without "Inbox/processed/" in front.
 total, uncited, listing = collections.Counter(), collections.Counter(), []
+held = collections.Counter()
 if PROCESSED.is_dir():
     for p in PROCESSED.rglob("*.md"):
         rel = p.relative_to(PROCESSED)
         if "originals" in rel.parts or p.name == "README.md":
             continue
         top = rel.parts[0] if len(rel.parts) > 1 else "(top level)"
+        mine = next((h for h in HELD if norm(rel).startswith(norm(h) + "/")), None)
+        if mine:
+            held[mine] += norm(rel) not in corpus
+            continue
         total[top] += 1
         if norm(rel) not in corpus:
             uncited[top] += 1
-            if LIST and norm(rel).startswith(norm(PREFIX)):
+            if LIST and top not in CONTEXT and norm(rel).startswith(norm(PREFIX)):
                 listing.append((p.stat().st_mtime, str(Path("Inbox") / "processed" / rel)))
 if LIST:
     for _, path in sorted(listing, reverse=True):
@@ -139,10 +149,14 @@ if work:
     n, m = sum(uncited[k] for k in work), sum(total[k] for k in total if k not in CONTEXT)
     found.append(f"- **Uncited sources:** {n} of {m} copies in `Inbox/processed/` are named by no note. Per folder: "
                  + ", ".join(f"{k} {uncited[k]}/{total[k]}" for k in work))
+info = []
 ctx = [k for k in CONTEXT if total[k]]
 if ctx:
-    found.append("- **Context folders (information only):** "
-                 + ", ".join(f"{k} {uncited[k]}/{total[k]} uncited" for k in ctx))
+    info.append("- Context folders (information only): "
+                + ", ".join(f"{k} {uncited[k]}/{total[k]} uncited" for k in ctx))
+if sum(held.values()):
+    info.append("- Held back, never compiled (information only): "
+                + ", ".join(f"{k} {held[k]} uncited" for k in HELD if held[k]))
 
 unsourced = []
 for p in wiki:
@@ -165,3 +179,5 @@ else:
 
 print(f"## Lint ({TODAY.isoformat()})")
 print("\n".join(found) if found else "- Nothing found. The wiki is clean.")
+if info:
+    print("\n".join(info))

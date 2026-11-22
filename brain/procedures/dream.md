@@ -87,7 +87,8 @@ Report, and fix only the mechanical faults:
 - **Uncited sources** (from the lint): a copy in `Inbox/processed/` that no note names was
   filed, not compiled. Compile up to five per run per `procedures/ingest.md` steps 4 to 8 (apply),
   newest first; `python3 scripts/lint.py --uncited [folder]` lists them. Skip the context folders
-  named in `scripts/lint.py` (`CONTEXT`). Report the count per folder.
+  named in `scripts/lint.py` (`CONTEXT`). The lint leaves out the folders in its `HELD` list: records
+  of other household members are never compiled (Standing rule 7). Report the count per folder.
 - **Contradiction sweep:** take the five files in `notes/`, `people/` and `projects/` with the newest
   `updated` date. For each, read the files that link to it and compare names, dates, amounts and
   statuses. Check a mismatch against the primary document first. If it stands, add it under the
