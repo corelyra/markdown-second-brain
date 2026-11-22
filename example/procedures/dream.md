@@ -86,8 +86,8 @@ Report, and fix only the mechanical faults:
   only in MEMORY.md. Add a missing link when the target file clearly holds the fact (apply).
 - **Uncited sources** (from the lint): a copy in `Inbox/processed/` that no note names was
   filed, not compiled. Compile up to five per run per `procedures/ingest.md` steps 4 to 8 (apply),
-  newest first. Skip the context folders named in `scripts/lint.py` (`CONTEXT`). Report the count
-  per folder.
+  newest first; `python3 scripts/lint.py --uncited [folder]` lists them. Skip the context folders
+  named in `scripts/lint.py` (`CONTEXT`). Report the count per folder.
 - **Contradiction sweep:** take the five files in `notes/`, `people/` and `projects/` with the newest
   `updated` date. For each, read the files that link to it and compare names, dates, amounts and
   statuses. Check a mismatch against the primary document first. If it stands, add it under the
@@ -103,9 +103,10 @@ Apply:
   (rename with `mv -n`, then fix inbound links).
 - Cross-links between clearly related files (same person, same organisation, same project).
 - **Orphans and dead links** (from the lint): give up to five orphans an inbound link, newest
-  first: a `Related:` line in the file that names the orphan's subject, or a `MEMORY.md` line if it
+  first, with `python3 scripts/relate.py <host> <orphan>`: a `Related:` line in the file that names the orphan's subject, or a `MEMORY.md` line if it
   belongs in every session's head. Fix a dead link when the target clearly moved (a digest now in
-  `sessions/dreamed/`); otherwise list it.
+  `sessions/dreamed/`). Mark a path that was only an example with "(example)" and a file that is
+  gone with "(no longer exists)", directly after the path. Otherwise list it.
 - **Related lines (chain of recall):** pick up to five files that lack a `Related:` line, active
   projects first, then the notes they cite. Add one line directly under the summary: `Related: `
   plus two to five relative paths of files that the file already mentions or that share its person,

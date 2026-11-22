@@ -92,7 +92,7 @@ Never read the whole tree.
 | `_sensitive-hold/` | Quarantined credentials, recovery material, identity numbers | See Standing rule 3 |
 | `templates/` | Skeletons for note, person, project, scheduled-jobs register | Copy, don't edit |
 | `skills/` | One folder per skill: `SKILL.md` plus any files it needs | Master copies; paste them into tools that keep their own skills |
-| `scripts/` | `build-index.py`, `frontmatter.py`, `log-recent.py`, `watchdog.py`, `lint.py`, `jobcheck.py` (all read the folder they sit in) | Python 3, standard library only |
+| `scripts/` | `build-index.py`, `frontmatter.py`, `log-recent.py`, `watchdog.py`, `lint.py`, `relate.py`, `jobcheck.py` (all read the folder they sit in) | Python 3, standard library only |
 | `MEMORY.md` | Core facts about Alex, always loaded; hub of a star schema | About 60 lines; one line per topic, each linking to its detail file |
 | `TODO.md` | Running to-do list (no-deadline admin, loose ends) | Add when Alex names a to-do; the dream reports it weekly |
 | `LOG.md` | One line per operation: ingest, query, lint, restructure | Append; `## [YYYY-MM-DD] op \| title` |

@@ -5,12 +5,17 @@ Run by procedures/dream.md step 0, and by hand when the owner says "lint the bra
 Prints a short Markdown list for the dream report. Read-only: it changes nothing.
 Exit code 0 always.
 
-Usage: python3 scripts/lint.py [--all]
-  --all   list every finding, not only the first five of each kind
+Usage: python3 scripts/lint.py [--all] [--uncited [FOLDER]]
+  --all               list every finding, not only the first five of each kind
+  --uncited [FOLDER]  list the uncited copies, one path per line, newest first;
+                      FOLDER limits the list to one folder under Inbox/processed/
 
 Checks:
  1. Orphans: files in notes/, people/, projects/ that no other file links to.
  2. Dead links: a path with a folder in it, ending in .md, that points at no file.
+    The append-only logs (decisions.md, LEARNINGS.md) are not checked: their past
+    entries are history and never edited. A path marked "(example)" or
+    "(no longer exists)" directly after it, once in the file, is not reported.
  3. Uncited sources: Markdown copies in Inbox/processed/ that no note names
     (filed, not compiled), counted per folder. Folders listed in CONTEXT below are
     searched as context and never compiled; their count is information only.
@@ -21,6 +26,13 @@ import collections, datetime as dt, os, re, sys, unicodedata
 from pathlib import Path
 
 args = sys.argv[1:]
+LIST, PREFIX = False, ""
+if "--uncited" in args:
+    i = args.index("--uncited")
+    LIST = True
+    if i + 1 < len(args) and not args[i + 1].startswith("--"):
+        PREFIX = args.pop(i + 1).strip("/")
+    args.pop(i)
 if [a for a in args if a != "--all"]:
     sys.exit(__doc__)
 ALL = "--all" in args
@@ -69,8 +81,9 @@ wiki = [p for d in WIKI for p in sorted((ROOT / d).glob("*.md"))]
 briefs = sorted((ROOT / "output" / "briefs").glob("*.md"))
 hubs = [ROOT / n for n in ("MEMORY.md", "TODO.md", "decisions.md", "LEARNINGS.md")]
 # The map names example paths, so it counts for inbound links but not for dead ones.
-quiet = [ROOT / "AGENTS.md"]
-linkers = wiki + briefs + [p for p in hubs if p.is_file()]
+# The append-only logs count the same way: their past entries are never edited.
+quiet = [ROOT / n for n in ("AGENTS.md", "decisions.md", "LEARNINGS.md")]
+linkers = wiki + briefs + [p for p in hubs if p.is_file() and p not in quiet]
 
 inbound = {norm(p): 0 for p in wiki}
 dead = []
@@ -84,7 +97,8 @@ for src in linkers + [p for p in quiet if p.is_file()]:
         target = resolve(token, src)
         if target is None:
             # A bare file name is shorthand, never a dead link.
-            if "/" in token and src not in quiet:
+            marked = re.search(re.escape(token) + r"`?\s*\((example|no longer exists)\)", text)
+            if "/" in token and src not in quiet and not marked:
                 hint = ""
                 if token.startswith("sessions/") and (ROOT / "sessions" / "dreamed" / Path(token).name).is_file():
                     hint = " (now in sessions/dreamed/)"
@@ -104,7 +118,7 @@ if dead:
                  + show(dead, lambda d: f"`{d[0]}` names `{d[1]}`"))
 
 # A copy counts as cited when a note names its path, with or without "Inbox/processed/" in front.
-total, uncited = collections.Counter(), collections.Counter()
+total, uncited, listing = collections.Counter(), collections.Counter(), []
 if PROCESSED.is_dir():
     for p in PROCESSED.rglob("*.md"):
         rel = p.relative_to(PROCESSED)
@@ -114,6 +128,12 @@ if PROCESSED.is_dir():
         total[top] += 1
         if norm(rel) not in corpus:
             uncited[top] += 1
+            if LIST and norm(rel).startswith(norm(PREFIX)):
+                listing.append((p.stat().st_mtime, str(Path("Inbox") / "processed" / rel)))
+if LIST:
+    for _, path in sorted(listing, reverse=True):
+        print(path)
+    sys.exit(0)
 work = [k for k in sorted(total) if k not in CONTEXT and uncited[k]]
 if work:
     n, m = sum(uncited[k] for k in work), sum(total[k] for k in total if k not in CONTEXT)

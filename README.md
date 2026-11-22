@@ -29,6 +29,7 @@ your brain.
 | Masters and copies | One source of truth; copies for other tools; drift checked weekly | `AGENTS.md`, `PROJECT-INSTRUCTIONS.md` |
 | Watchdog | A read-only health check of the brain itself | `scripts/watchdog.py` |
 | Lint | A read-only check of the notes as a wiki: orphans, dead links, sources that no note cites, files without sources | `scripts/lint.py` |
+| Relate | Adds one link to a file's `Related:` line, with a before-copy; the tool for giving an orphan an inbound link | `scripts/relate.py` |
 | Log | One append-only timeline of every ingest, filed answer, dream and restructure | `LOG.md` |
 | File answers back | A good answer is saved as an indexed brief, so the next question finds it instead of deriving it again | `output/briefs/`, `AGENTS.md` |
 | Job check | Did every scheduled job really run? Judged by the proof file each leaves, not by a "succeeded" status | `scripts/jobcheck.py`, `notes/scheduled-jobs.md` |
